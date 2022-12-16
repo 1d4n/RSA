@@ -32,6 +32,7 @@ def modular_inverse(a,n):
     -------
     x: such that (a*x % n) == 1 and 0 <= x < n if one exists, else None
     """
+    return extended_gcd(a, n)[1]  # assuming gcd is 1
 
 
 def modular_exponent(a, d, n):
@@ -48,6 +49,22 @@ def modular_exponent(a, d, n):
     -------
     b: such that b == (a**d) % n
     """
+    arr = []
+    bin_exponent = format(d, 'b')[::-1]
+    a %= n
+    for i in range(0, len(bin_exponent)):
+        if bin_exponent[i] == '1':
+            if len(arr) > 0:
+                arr.append((i, arr[-1][1] ** (2 ** (i - arr[-1][0])) % n))
+            else:
+                arr.append((i, a ** (2 ** i) % n))
+    result = 1
+    if len(arr) == 0:
+        return 0
+    for a in arr:
+        result *= a[1]
+        result %= n
+    return result
 
 def miller_rabin(n):
     """
