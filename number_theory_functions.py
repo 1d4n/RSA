@@ -12,7 +12,11 @@ def extended_gcd(a,b):
     -------
     (d, x, y): d = gcd(a,b) = a*x + b*y
     """
-
+    if a == 0:
+        return b, 0, 1
+    else:
+        gcd, x, y = extended_gcd(b % a, a)
+        return gcd, y - (b // a) * x, x
 
 
 def modular_inverse(a,n):
