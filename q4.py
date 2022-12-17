@@ -1,7 +1,8 @@
-from rsa_functions import RSA
-from number_theory_functions import *
-import random
+from number_theory_functions import is_prime, modular_inverse
 
-print(is_prime(991))
+e = 11
+N = 991
 
-print("Inverse of e=11 in mod N=990 ", modular_inverse(11, 990))
+print(f"{is_prime(N) = }")
+phi_N = 990
+print(f"Inverse of {e} in U_{phi_N} is: {modular_inverse(e, phi_N)}")
