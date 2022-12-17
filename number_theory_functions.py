@@ -78,6 +78,8 @@ def modular_exponent(a, d, n):
     rev_bin_exponent = format(d, 'b')[::-1]
     powers_arr = powers_of_pow_of_2(a, len(rev_bin_exponent), n)
     first_pow = rev_bin_exponent.find('1')
+    if first_pow == -1:
+        return 0
     a = powers_arr[first_pow]
     for i in range(first_pow + 1, len(rev_bin_exponent)):
         if rev_bin_exponent[i] == '1':
@@ -142,7 +144,3 @@ def generate_prime(digits):
         if is_prime(n):
             return n
     return None
-
-
-if __name__ == '__main__':
-    print(extended_gcd(911, 7879))
