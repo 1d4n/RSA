@@ -4,7 +4,7 @@ e = 11
 N = 991
 E = lambda x: modular_exponent(x, e, N)
 
-d = dict()
+d = dict()  # {img: src}
 for a in range(N):
     img = E(a)
     if img in d:

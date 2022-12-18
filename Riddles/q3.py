@@ -8,9 +8,9 @@ q = 3499
 N = p * q
 M = 42
 
-phi_n = (p-1) * (q-1)
-d = modular_inverse(e, phi_n)
-print(f"Inverse of {e} in U_{phi_n} is: {d}")
+phi_N = (p - 1) * (q - 1)
+d = modular_inverse(e, phi_N)
+print(f"Inverse of {e} in U_{phi_N} is: {d}")
 rsa = RSA((N, e), (N, d))
 decrypted = rsa.decrypt(M)
 print("=> The decrypted message is:", decrypted)
