@@ -12,7 +12,7 @@ def powers_of_pow_of_2(a, d, n):
 
     Returns
     -------
-    A list with all the powers: (a**i % n), i in {2**0, 2**1, ..., 2**d} .
+    A list of all the powers: (a**i % n), i in {2**0, 2**1, ..., 2**d}.
     """
     result = [a % n]
     for _ in range(1, d):
