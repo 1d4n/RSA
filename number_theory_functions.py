@@ -3,7 +3,7 @@ from random import randrange
 
 def powers_of_pow_of_2(a, d, n):
     """
-    Returns the powers a modulo n, by powers of 2 from 2**0 to 2**d
+    Returns the powers: a modulo n, by powers of 2 from 2**0 to 2**d
     Parameters
     ----------
     a : The exponential's base.
@@ -12,7 +12,7 @@ def powers_of_pow_of_2(a, d, n):
 
     Returns
     -------
-    A list with all the powers: a**i % n
+    A list with all the powers: (a**i % n), i in {2**0, 2**1, ..., 2**d} .
     """
     result = [a % n]
     for _ in range(1, d):
