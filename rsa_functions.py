@@ -2,25 +2,6 @@ from number_theory_functions import *
 import random
 
 
-def no_digit(num):
-    """
-    Calculates the number of digits of a non-negative integer.
-
-    Parameters
-    ----------
-    num : A non-negative integer
-
-    Returns
-    -------
-    The number of digits of num.
-    """
-    count = 0
-    while (num > 0):
-        count += 1
-        num //= 10
-    return count
-
-
 class RSA():
     def __init__(self, public_key, private_key=None):
         self.public_key = public_key
@@ -42,20 +23,22 @@ class RSA():
         * The private key (N,d)
         """
         while True:
-            p = generate_prime(digits // 2)
+            p = generate_prime((digits + 1) // 2)
             q = generate_prime(digits // 2)
-            N = p * q
-            if (no_digit(N) == digits):
+            # Make sure p and q have been successfully generated, and they are different
+            # and the number of digits of p*q is valid.
+            if p and q and p != q and len(str(p * q)) == digits:
                 break
+        N = p * q
+        phi_N = (p - 1) * (q - 1)
 
-        phi_n = (p - 1) * (q - 1)
         while True:
-            e = random.randint(2, phi_n - 1)
+            e = random.randint(2, phi_N - 1)
             # Make sure e is part of U(phi(N))
-            if (extended_gcd(phi_n, e)[0] == 1):
+            if extended_gcd(phi_N, e)[0] == 1:
                 break
 
-        d = modular_inverse(e, phi_n)
+        d = modular_inverse(e, phi_N)
         return RSA((N, e), (N, d))
 
     def encrypt(self, m):
