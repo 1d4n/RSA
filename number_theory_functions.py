@@ -1,25 +1,6 @@
 from random import randrange
 
 
-def powers_of_pow_of_2(a, d, n):
-    """
-    Returns the powers: a modulo n, by powers of 2 from 2**0 to 2**d
-    Parameters
-    ----------
-    a : The exponential's base.
-    d : The last exponential's exponent to raise the base by 2**d.
-    n : The exponential's modulus.
-
-    Returns
-    -------
-    A list of all the powers: (a**i % n), i in {2**0, 2**1, ..., 2**d}.
-    """
-    result = [a % n]
-    for _ in range(1, d):
-        result.append(result[-1] ** 2 % n)
-    return result
-
-
 def extended_gcd(a, b):
     """
     Returns the extended gcd of a and b
@@ -61,6 +42,19 @@ def modular_inverse(a, n):
     return None
 
 
+def modular_exponent_aux(base, exp, n):
+    res = 1
+    power = base % n
+    while exp > 0:
+        if exp % 2 == 1:
+            res *= power
+            res %= n
+        exp //= 2
+        power *= power
+        power %= n
+    return res
+
+
 def modular_exponent(a, d, n):
     """
     Returns a to the power of d modulo n
@@ -75,17 +69,16 @@ def modular_exponent(a, d, n):
     -------
     b: such that b == (a**d) % n
     """
-    rev_bin_exponent = format(d, 'b')[::-1]
-    powers_arr = powers_of_pow_of_2(a, len(rev_bin_exponent), n)
-    first_pow = rev_bin_exponent.find('1')
-    if first_pow == -1:
+    if n < 1:
+        return None
+    if n == 1:
         return 0
-    a = powers_arr[first_pow]
-    for i in range(first_pow + 1, len(rev_bin_exponent)):
-        if rev_bin_exponent[i] == '1':
-            a *= powers_arr[i]
-            a %= n
-    return a
+    if d < 0:
+        a = modular_inverse(a, n)
+        d = -d
+        if not a:
+            return None
+    return modular_exponent_aux(a, d, n)
 
 
 def miller_rabin(n):
@@ -144,3 +137,7 @@ def generate_prime(digits):
         if is_prime(n):
             return n
     return None
+
+
+if __name__ == '__main__':
+    print(modular_exponent(3, 4, 10))
