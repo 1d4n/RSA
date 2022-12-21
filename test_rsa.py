@@ -1,6 +1,7 @@
 import unittest
 import number_theory_functions
 from rsa_functions import RSA
+from random import sample
 
 
 class TestNumberTheory(unittest.TestCase):
@@ -23,6 +24,16 @@ class TestNumberTheory(unittest.TestCase):
             self.assertEqual((x % n), x)
 
         self.assertIsNone(number_theory_functions.modular_inverse(119952, 34425))
+
+    def test_modular_exponent(self):
+        values = [
+            [(0, 0, 1), 0], [(0, 1, 1), 0], [(0, 1, 123), 0], [(0, 0, 123), 1], [(241, 0, 3213), 1],
+            [(969003984405, 969003984405, 12321), 10683], [(547358786569, 29948725249, 279730978816), 91612218377]
+        ]
+
+        for val in values:
+            base, exp, n = val[0]
+            self.assertEqual(number_theory_functions.modular_exponent(base, exp, n), val[1])
 
 
 class TestRSA(unittest.TestCase):
